@@ -2,6 +2,7 @@ using ss_transpo_dss.services.Helpers;
 using ss_transpo_dss.services.Interfaces;
 using ss_transpo_dss.services.Models;
 using ss_transpo_dss.clients.apiclient;
+using ss_transpo_dss.services.Globals;
 
 namespace ss_transpo_dss.services.Services;
 
@@ -22,7 +23,7 @@ public class LTADataService(ApiClient apiClient) : ILTADataService
             ltaBusTiming.BusServices.FirstOrDefault()?.NextBus3.EstimatedArrival.ConvertToDateTime().MinutesFromNow()
         };
 
-        return new LTABusServiceRecord(ltaBusTiming.BusServices.FirstOrDefault()?.ServiceNo ?? "N/A",
+        return new LTABusServiceRecord(ltaBusTiming.BusServices.FirstOrDefault()?.ServiceNo ?? Constants.NO_TRANSPORT_AVAILABLE,
             ltaBusServiceTimings);
     }
 }
