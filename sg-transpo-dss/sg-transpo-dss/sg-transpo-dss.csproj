@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>sg-transpo-dss</RootNamespace>
+        <AssemblyName>$(AssemblyName.Replace(' ', '_'))</AssemblyName>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>0374dd29-5ff3-4d95-a671-0008ae87ee9a</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\sg-transpo-rcl\sg-transpo-rcl.csproj" />
+        <ProjectReference Include="..\..\ss-transpo-dss.services\ss-transpo-dss.services.csproj" />
+        <ProjectReference Include="..\sg-transpo-dss.Client\sg-transpo-dss.Client.csproj"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.10"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+</Project>
