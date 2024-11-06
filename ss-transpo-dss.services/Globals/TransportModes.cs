@@ -6,4 +6,5 @@ public static class TransportModes
     public static string BUS = "Bus";
     
     public static List<string> ToList() => new() {SHUTTLE, BUS};
+    public static string Simplify(this string entry) => entry[..1];
 }

@@ -54,7 +54,7 @@ public sealed class TimeTableService(ApiClient apiClient, ILTADataService ltaDat
 
     private KeyValuePair<string, List<string>> GetDecision(int shuttleTiming,
         LTABusServiceRecord ltaBusTimings, bool takeBus = false)
-        => takeBus ? new KeyValuePair<string, List<string>>(TransportModes.BUS, ltaBusTimings.Arrivals.GetArrivalListString())
+        => takeBus ? new KeyValuePair<string, List<string>>($"{TransportModes.BUS.Simplify()}-{ltaBusTimings.ServiceNo}", ltaBusTimings.Arrivals.GetArrivalListString())
                 : new KeyValuePair<string, List<string>>(TransportModes.SHUTTLE, new List<string>(){shuttleTiming.GetKwbShuttleTimingString()});
             
     
