@@ -1,5 +1,6 @@
 
 using System.Globalization;
+using System.Reflection.Metadata;
 using ss_transpo_dss.services.Globals;
 
 namespace ss_transpo_dss.services.Helpers;
@@ -33,8 +34,10 @@ public static class DecisionHelpers
         List<string> arrivalStrings = new();
         arrivals.OrderBy(x=>x.Value).ToList().ForEach(arrival =>
         {
-            arrivalStrings.Add(arrival <= 0 ? "Arr" : arrival.ToString());
+            arrivalStrings.Add(arrival <= 0 ? Constants.LTA_BUS_ARRIVING : arrival.ToString());
         });
         return arrivalStrings;
     }
+
+    public static string GetKwbShuttleTimingString(this int minutes) => minutes < 0 ? Constants.NO_TRANSPORT_AVAILABLE : minutes.ToString();
 }

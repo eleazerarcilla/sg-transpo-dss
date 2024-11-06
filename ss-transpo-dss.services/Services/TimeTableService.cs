@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 using ss_transpo_dss.services.Globals;
 using ss_transpo_dss.services.Interfaces;
@@ -23,13 +24,8 @@ public sealed class TimeTableService(ApiClient apiClient, ILTADataService ltaDat
     public async Task<DateTime?> GetClosestDepartureByRoute(string route)
     {
         DateTime now = DateTime.Now; //SGT
-        string kwbRoute = GetKwbRoute(route);
-        var timings = await LoadKwbTimingsJson();
-        
-        if(timings.Any(key => key.Route == kwbRoute) == false) return null;
-        
-        var routeTimings = timings.FirstOrDefault(key => key.Route == kwbRoute) ?? new();
-        var minDate = routeTimings.TimingDates.Where(x=> x >= now).OrderBy(x => Math.Abs((now - x).TotalSeconds)).FirstOrDefault();
+        var timings = await GetTimingsByRoute(route);
+        var minDate = timings.TimingDates.Where(x=> x >= now).OrderBy(x => Math.Abs((now - x).TotalSeconds)).FirstOrDefault();
         return minDate;
     }
 
@@ -38,18 +34,28 @@ public sealed class TimeTableService(ApiClient apiClient, ILTADataService ltaDat
         int shuttleTiming = (await GetClosestDepartureByRoute(route)).MinutesFromNow();
         var ltaBusTiming = await ltaDataService.GetBusArrivalsInMinutesByBusCodeAndServiceNo(route.KwbRouteBusStopCode(),
                 KwbRouteModes.BUSSERVICENO);
-        bool takeBus = ltaBusTiming.Arrivals.FirstOrDefault() <= shuttleTiming;
-        string transportMode = takeBus ? TransportModes.BUS : TransportModes.SHUTTLE;
-        var arrivals = takeBus ? ltaBusTiming.Arrivals.GetArrivalListString()
-            : new(){shuttleTiming.ToString()};
-        string otherTransport = takeBus ? TransportModes.SHUTTLE : TransportModes.BUS;
-        var otherArrivals = takeBus ? new(){shuttleTiming.ToString()} : ltaBusTiming.Arrivals.GetArrivalListString() ;
-        return new DecisionResponse(transportMode, arrivals, otherTransport, otherArrivals);
+        bool takeBus = ltaBusTiming.Arrivals.FirstOrDefault() <= shuttleTiming || shuttleTiming < 0;
+        
+        KeyValuePair<string, List<string>> primarySuggestions = GetDecision(shuttleTiming, ltaBusTiming, takeBus);
+        KeyValuePair<string, List<string>> secondarySuggestion = GetDecision(shuttleTiming, ltaBusTiming, !takeBus);
+        
+        return new DecisionResponse(
+            primarySuggestions.Key, 
+            primarySuggestions.Value, 
+            secondarySuggestion.Key, 
+            secondarySuggestion.Value);
     }
 
     private async Task<List<TimeTableModel>> LoadKwbTimingsJson()
     {
         var json = await File.ReadAllTextAsync(Path.Combine(AppContext.BaseDirectory, KWB_TIMETABLE_FILENAME));
-        return JsonSerializer.Deserialize<List<TimeTableModel>>(json) ?? new List<TimeTableModel>();
+        return JsonSerializer.Deserialize<List<TimeTableModel>>(json) ?? new();
     }
+
+    private KeyValuePair<string, List<string>> GetDecision(int shuttleTiming,
+        LTABusServiceRecord ltaBusTimings, bool takeBus = false)
+        => takeBus ? new KeyValuePair<string, List<string>>($"{TransportModes.BUS.Simplify()}-{ltaBusTimings.ServiceNo}", ltaBusTimings.Arrivals.GetArrivalListString())
+                : new KeyValuePair<string, List<string>>(TransportModes.SHUTTLE, new List<string>(){shuttleTiming.GetKwbShuttleTimingString()});
+            
+    
 }
