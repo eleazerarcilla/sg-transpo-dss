@@ -1,0 +1,13 @@
+@if (_decisionResponse == null)
+{
+<p>
+    <em>Loading...</em>
+</p>
+}
+else
+{
+    <div class="decision-content">
+        <h2>@_decisionResponse.SuggestedTransport [@(string.Join(",", _decisionResponse.NextTimings))]</h2>
+        <h5>@_decisionResponse.OtherOptions [@(string.Join(",", _decisionResponse.OtherOptionTimings))]</h5>
+    </div>
+}

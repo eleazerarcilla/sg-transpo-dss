@@ -11,7 +11,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\sg-transpo-rcl\sg-transpo-rcl.csproj" />
         <ProjectReference Include="..\..\ss-transpo-dss.services\ss-transpo-dss.services.csproj" />
         <ProjectReference Include="..\sg-transpo-dss.Client\sg-transpo-dss.Client.csproj"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.10"/>
