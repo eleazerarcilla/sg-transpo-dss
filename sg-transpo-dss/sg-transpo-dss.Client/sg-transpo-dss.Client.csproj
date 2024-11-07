@@ -21,4 +21,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\sg-transpo-rcl\sg-transpo-rcl.csproj" />
+    </ItemGroup>
+
 </Project>

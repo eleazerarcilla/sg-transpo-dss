@@ -28,7 +28,7 @@ public class TimeTableController(ITimeTableService timeTableService, ILTADataSer
     [Produces("application/json")]
     public async Task<LTABusArrivalModel> GetBusArrivalsByBusStopCode(
         [FromQuery(Name="busStopCode")]string busStopCode,
-        [FromQuery(Name="serviceNo")] string serviceNo)
+        [FromQuery(Name="serviceNo")] string? serviceNo)
     {
         return await ltaDataService.GetBusArrivalsByBusCodeAndServiceNo(busStopCode, serviceNo);
     }

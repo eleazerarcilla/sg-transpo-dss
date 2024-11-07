@@ -1,36 +1,8 @@
 ﻿@page "/KwbOut"
-@using sg_transpo_rcl.Clients
-@using ss_transpo_dss.services.Models.Responses
 @attribute [StreamRendering]
 
-<PageTitle></PageTitle>
+<PageTitle>Going Out of KWB</PageTitle>
 
 <h1>Route: Going out of Kingsford Waterbay</h1>
-
 <p>Showing the best transport mode:</p>
-
-@if (_decisionResponse == null)
-{
-    <p>
-        <em>Loading...</em>
-    </p>
-}
-else
-{
-    <div class="decision-content">
-        <h2>@_decisionResponse.SuggestedTransport [@(string.Join(",", _decisionResponse.NextTimings))]</h2>
-        <h5>Also: @_decisionResponse.OtherOptions [@(string.Join(",", _decisionResponse.OtherOptionTimings))]</h5>
-    </div>
-    
-}
-
-@code {
-    [Inject] protected TransportApiClient TransportApiClient { get; set; } = default!;
-    private DecisionResponse _decisionResponse;
-
-    protected override async Task OnInitializedAsync()
-    {
-        _decisionResponse = await TransportApiClient.GetDecisionResponseAsync("outgoing");
-    }
-
-}
+<KwbSuggestion Route="outgoing" />
