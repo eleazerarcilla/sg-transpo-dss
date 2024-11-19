@@ -20,4 +20,8 @@
       <ProjectReference Include="..\ss-transpo-dss.services\ss-transpo-dss.services.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="ViewModels\" />
+    </ItemGroup>
+
 </Project>

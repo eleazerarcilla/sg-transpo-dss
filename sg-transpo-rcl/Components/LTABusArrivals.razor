@@ -1,0 +1,17 @@
+@inherits BusArrivalsBase
+
+@if (_ltaBusArrivalModel is null)
+{
+    <i>Loading....</i>
+}
+else
+{
+    var busServiceRecord = _ltaBusArrivalModel.ToBusArrivalsRecord();
+    foreach (var busService in busServiceRecord)
+    {
+        <div style="border:solid 1px black;">
+            @busService.ServiceNo [@string.Join(", ", busService.Arrivals.GetArrivalListString())]
+        </div>
+        <br />
+    }
+}
