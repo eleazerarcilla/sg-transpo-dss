@@ -23,9 +23,10 @@ string? licenseKey = builder.Configuration["sg-lta-api-key"]; //supply your own 
 string? sglta_baseUri = builder.Configuration["sg-lta-baseuri"];
 
 #region Services
+builder.Services.AddLogging(builder => builder.AddConsole());
 builder.Services.AddSingleton<ITimeTableService, TimeTableService>();
 builder.Services.AddSingleton<ILTADataService, LTADataService>();
-builder.Services.AddSingleton(_ => new ApiClient(sglta_baseUri!, licenseKey!, new HttpClient()));
+builder.Services.AddSingleton(_ => new ApiClient(sglta_baseUri!, licenseKey!, new HttpClient(), builder.Services.BuildServiceProvider().GetService<ILogger<ApiClient>>()));
 #endregion
 
 var app = builder.Build();
