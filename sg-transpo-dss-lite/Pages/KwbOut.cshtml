@@ -1,0 +1,17 @@
+﻿@page "/KwbOut"
+@model KwbOutModel
+@using sg_transpo_rcl.Components
+@using ss_transpo_dss.services.Models.Responses
+@using static ss_transpo_dss.services.Globals.KwbRouteDirections
+@inject IHtmlHelper HtmlHelper
+
+@{
+    ViewData["Title"] = $"Kingsford Waterbay ({OUTGOING})";
+    Model.DecisionResponses.TryGetValue(OUTGOING, out DecisionResponse result);
+}
+
+<div class="text-center">
+    <h5 class="display-6">Kingsford Waterbay (@OUTGOING):</h5>
+    <br />
+    <partial name="_KwbArrivalsPartial" model="result" />
+</div>

@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35521.163 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sg-transpo-dss", "sg-transpo-dss\sg-transpo-dss\sg-transpo-dss.csproj", "{F16CAD77-E489-48D1-A1D7-E853750AB03E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sg-transpo-dss.Client", "sg-transpo-dss\sg-transpo-dss.Client\sg-transpo-dss.Client.csproj", "{FCEDA123-13E5-403D-BFD2-14BB48581B1E}"
@@ -15,6 +18,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Backend", "01 - Backend", "{7CC7395B-3BF8-4E20-998C-45340EC4BD9B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Frontend", "02 - Frontend", "{AFCD2613-FAAE-4396-8E04-17F7034EF6E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sg-transpo-dss-lite", "sg-transpo-dss-lite\sg-transpo-dss-lite.csproj", "{A53435C9-E9B4-4CBE-AFEB-D0C97985B111}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,12 +47,20 @@ Global
 		{8A326AF1-3751-4A06-95CE-15B1FEC914A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A326AF1-3751-4A06-95CE-15B1FEC914A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A326AF1-3751-4A06-95CE-15B1FEC914A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A53435C9-E9B4-4CBE-AFEB-D0C97985B111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A53435C9-E9B4-4CBE-AFEB-D0C97985B111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A53435C9-E9B4-4CBE-AFEB-D0C97985B111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A53435C9-E9B4-4CBE-AFEB-D0C97985B111}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A6333BE4-75C8-430F-8439-1EE80759C763} = {209E6A8D-26B6-4A80-B6D5-28616136A892}
-		{8A326AF1-3751-4A06-95CE-15B1FEC914A9} = {209E6A8D-26B6-4A80-B6D5-28616136A892}
 		{F16CAD77-E489-48D1-A1D7-E853750AB03E} = {AFCD2613-FAAE-4396-8E04-17F7034EF6E7}
 		{FCEDA123-13E5-403D-BFD2-14BB48581B1E} = {AFCD2613-FAAE-4396-8E04-17F7034EF6E7}
+		{A6333BE4-75C8-430F-8439-1EE80759C763} = {209E6A8D-26B6-4A80-B6D5-28616136A892}
 		{AD4FAAED-FF12-4DB5-8A30-B3B63E313973} = {7CC7395B-3BF8-4E20-998C-45340EC4BD9B}
+		{8A326AF1-3751-4A06-95CE-15B1FEC914A9} = {209E6A8D-26B6-4A80-B6D5-28616136A892}
+		{A53435C9-E9B4-4CBE-AFEB-D0C97985B111} = {AFCD2613-FAAE-4396-8E04-17F7034EF6E7}
 	EndGlobalSection
 EndGlobal
