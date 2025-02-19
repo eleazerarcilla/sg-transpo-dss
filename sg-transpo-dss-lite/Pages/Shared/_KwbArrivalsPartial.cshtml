@@ -1,0 +1,9 @@
+﻿@using ss_transpo_dss.services.Models.Responses
+@model DecisionResponse
+@if (Model is not null)
+{
+    <div class="decision-content">
+        <h2>@Model?.SuggestedTransport [@(string.Join(",", Model?.NextTimings))]</h2>
+        <h5>@Model.OtherOptions [@(string.Join(",", Model?.OtherOptionTimings))]</h5>
+    </div>
+}
