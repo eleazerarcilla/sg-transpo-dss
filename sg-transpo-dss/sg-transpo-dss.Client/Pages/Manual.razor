@@ -1,6 +1,18 @@
 @page "/Manual"
-<h3>Manual</h3>
+@page "/Manual/{BusStopCode}"
+@layout EmptyLayout
+@rendermode InteractiveAuto
 
-@code {
-    
+@if (string.IsNullOrEmpty(BusStopCode))
+{
+    <h1>Please provide Bus Stop Code</h1>
+    <div style="display: inline-block">
+        <div>Bus Stop Code:</div>
+        <input type="number" @bind="BusStopCode"/>
+        <button onclick="ChangeBusStopCode">Go</button>
+    </div>
+}
+else
+{
+    <LTABusArrivals BusStopCode="@BusStopCode"  />
 }

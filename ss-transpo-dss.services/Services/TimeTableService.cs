@@ -32,9 +32,10 @@ public sealed class TimeTableService(ApiClient apiClient, ILTADataService ltaDat
     public async Task<DecisionResponse> GetTransportDecision(string route)
     {
         int shuttleTiming = (await GetClosestDepartureByRoute(route)).MinutesFromNow();
-        var ltaBusTiming = await ltaDataService.GetBusArrivalsInMinutesByBusCodeAndServiceNo(route.KwbRouteBusStopCode(),
-                KwbRouteModes.BUSSERVICENO);
-        bool takeBus = ltaBusTiming.Arrivals.FirstOrDefault() <= shuttleTiming || shuttleTiming < 0;
+        var ltaBusTiming = (await ltaDataService
+            .GetBusArrivalsInMinutesByBusCodeAndServiceNo(route.KwbRouteBusStopCode(),KwbRouteModes.BUSSERVICENO))
+            .FirstOrDefault();
+        bool takeBus = ltaBusTiming?.Arrivals.FirstOrDefault() <= shuttleTiming || shuttleTiming < 0;
         
         KeyValuePair<string, List<string>> primarySuggestions = GetDecision(shuttleTiming, ltaBusTiming, takeBus);
         KeyValuePair<string, List<string>> secondarySuggestion = GetDecision(shuttleTiming, ltaBusTiming, !takeBus);
@@ -53,9 +54,10 @@ public sealed class TimeTableService(ApiClient apiClient, ILTADataService ltaDat
     }
 
     private KeyValuePair<string, List<string>> GetDecision(int shuttleTiming,
-        LTABusServiceRecord ltaBusTimings, bool takeBus = false)
-        => takeBus ? new KeyValuePair<string, List<string>>($"{TransportModes.BUS.Simplify()}-{ltaBusTimings.ServiceNo}", ltaBusTimings.Arrivals.GetArrivalListString())
-                : new KeyValuePair<string, List<string>>(TransportModes.SHUTTLE, new List<string>(){shuttleTiming.GetKwbShuttleTimingString()});
+        LTABusServiceRecord? ltaBusTimings, bool takeBus = false)
+        => takeBus ? new KeyValuePair<string, List<string>>($"{TransportModes.BUS.Simplify()}-{ltaBusTimings?.ServiceNo}", ltaBusTimings?.Arrivals.GetArrivalListString())
+                : new KeyValuePair<string, List<string>>(TransportModes.SHUTTLE,
+                    [shuttleTiming.GetKwbShuttleTimingString()]);
             
     
 }

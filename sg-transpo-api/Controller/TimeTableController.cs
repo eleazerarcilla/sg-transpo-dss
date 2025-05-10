@@ -23,14 +23,23 @@ public class TimeTableController(ITimeTableService timeTableService, ILTADataSer
     {
         return await timeTableService.GetClosestDepartureByRoute(route);
     }
-    [HttpGet("getBusArrivalsByBusStopCode", Name = "GetBusArrivalsByBusStopCode")]
+    [HttpGet("getRawBusArrivalsByBusStopCode", Name = "GetRawBusArrivalsByBusStopCode")]
     [ProducesResponseType<LTABusArrivalModel>(StatusCodes.Status200OK)]
     [Produces("application/json")]
-    public async Task<LTABusArrivalModel> GetBusArrivalsByBusStopCode(
+    public async Task<LTABusArrivalModel?> GetRawBusArrivalsByBusStopCode(
         [FromQuery(Name="busStopCode")]string busStopCode,
         [FromQuery(Name="serviceNo")] string? serviceNo)
     {
         return await ltaDataService.GetBusArrivalsByBusCodeAndServiceNo(busStopCode, serviceNo);
+    }
+    [HttpGet("getBusArrivalsByBusStopCode", Name = "GetBusArrivalsByBusStopCode")]
+    [ProducesResponseType<List<LTABusServiceRecord>>(StatusCodes.Status200OK)]
+    [Produces("application/json")]
+    public async Task<List<LTABusServiceRecord>> GetBusArrivalsByBusStopCode(
+        [FromQuery(Name="busStopCode")]string busStopCode,
+        [FromQuery(Name="serviceNo")] string? serviceNo)
+    {
+        return await ltaDataService.GetBusArrivalsInMinutesByBusCodeAndServiceNo(busStopCode, serviceNo);
     }
     [HttpGet("getKwbDecision", Name = "GetKwbDecision")]
     [ProducesResponseType<DecisionResponse>(StatusCodes.Status200OK)]
